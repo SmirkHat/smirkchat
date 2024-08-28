@@ -31,10 +31,7 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Initialize markdown-it
                 const md = window.markdownit();
-
-                // Store the conversation state
                 let conversationContext = '';
                 let lastResponseLength = 0;
 
@@ -105,39 +102,36 @@
                             if (xhr.status === 200) {
                                 try {
                                     var response = JSON.parse(xhr.responseText);
-                                    console.log(response); // For debugging
+                                    console.log(response);
 
                                     if (response.choices && response.choices.length > 0) {
                                         var content = response.choices[0].message.content;
                                         console.log('Additional Markdown content:', content); // Debug additional Markdown content
 
-                                        var htmlContent = md.render(content); // Convert Markdown to HTML
+                                        var htmlContent = md.render(content); // convert Markdown to HTML
 
                                         // Append new content to the existing content
                                         responseElement.innerHTML += htmlContent;
 
-                                        // Update the conversation context
                                         conversationContext += content;
 
-                                        // Update the button visibility based on new content length
-                                        if (content.length > 1000) { // Adjust the threshold if needed
+                                        if (content.length > 1000) {
                                             generateMoreButton.style.display = "block";
                                         }
                                     } else {
                                         responseElement.innerText = "Nastala chyba.";
                                     }
                                 } catch (e) {
-                                    responseElement.innerText = "Chyba: " + e.message;
+                                    responseElement.innerText = "Nastala chyba: " + e.message;
                                 }
                             } else {
-                                responseElement.innerText = "Chyba: " + xhr.status;
+                                responseElement.innerText = "Nastala chyba: " + xhr.status;
                             }
                         }
                     };
                     xhr.send('prompt=' + encodeURIComponent(conversationContext));
                 }
 
-                // Make the sendPrompt and generateMore functions globally accessible
                 window.sendPrompt = sendPrompt;
                 window.generateMore = generateMore;
             });
