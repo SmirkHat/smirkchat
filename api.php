@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$api_key = 'YOUR_API_KEY_HERE';
+	$api_key = 'YOUR_API_KEY_HERE'; // not needed for this free API
 	$prompt = $_POST['prompt'];
 
 	// Define the system message for the chatbot's role and instructions
